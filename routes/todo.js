@@ -23,7 +23,7 @@ router.post('/ajouter/', urlencodedParser, function(req, res) {
     if (req.body.newtodo != '') {
         req.session.todolist.push(req.body.newtodo);
     }
-    res.redirect('/');
+    res.redirect('/todo');
 });
 
 /* Supprime un élément de la todolist */
