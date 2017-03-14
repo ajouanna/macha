@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Super Chat temps réel !</title>
+        <link rel="stylesheet" href="stylesheets/style.css" />
+    </head>
+ 
+    <body>
+        <h1>Le super Chat temps réel !</h1>
+
+        <form action="/tchat" method="post" id="formulaire_chat">
+            <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+            <input type="submit" id="envoi_message" value="Envoyer" />
+        </form>
+
+        <section id="zone_chat">
+            
+        </section>
+
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+		<script src = "javascripts/tchat.js"></script>
+
+    </body>
+</html>

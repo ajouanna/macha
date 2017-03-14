@@ -6,3 +6,9 @@ body {
 a {
   color: #00B7FF;
 }
+
+#zone_chat strong {
+	color: white;
+	background-color: black;
+	padding: 2px;
+}
