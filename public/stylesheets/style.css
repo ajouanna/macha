@@ -1,14 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 13px Helvetica, Arial;
+    transition: all 0.5s;
 }
 
 a {
   color: #00B7FF;
 }
 
-#zone_chat strong {
-	color: white;
-	background-color: black;
-	padding: 2px;
+
+section#zone_chat form {
+    background: #000;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
+section#message {
+    border: 0;
+    padding: 5px 10px;
+    width: 90%;
+    height: 100%;
+    margin-right: .5%;
+    font-size: 20px;
+}
+section#envoi_message {
+    width: 9%;
+    height: 100%;
+    background: #e67e22;
+    float: right;
+    border: none;
+    margin-right: 0.5%;
+    font-size: 17px;
+    color: white;
 }

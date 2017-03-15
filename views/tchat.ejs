@@ -9,15 +9,13 @@
     <body>
         <h1>Le super Chat temps réel !</h1>
 
-        <form action="/tchat" method="post" id="formulaire_chat">
-            <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
-            <input type="submit" id="envoi_message" value="Envoyer" />
-        </form>
-
         <section id="zone_chat">
-            
-        </section>
 
+			<form action="/tchat" method="post" id="formulaire_chat">
+				<input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+				<input type="submit" id="envoi_message" value="Envoyer" />
+			</form>		
+        </section>
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
