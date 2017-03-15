@@ -34,11 +34,6 @@ router.get('/supprimer/:id', function(req, res) {
     res.redirect('/todo');
 });
 
-/* On redirige vers la todolist si la page demandée n'est pas trouvée */
-/*
-router.use(function(req, res, next){
-    res.redirect('/todo');
-});
-*/
+
 
 module.exports = router;
