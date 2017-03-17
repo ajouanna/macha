@@ -4,24 +4,24 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
-/* S'il n'y a pas de todolist dans la session,
+/* S'il n'y a pas de todolist 
 on en crée une vide sous forme d'array avant la suite */
 router.use(function(req, res, next){
-    if (typeof(req.session.todolist) == 'undefined') {
-        req.session.todolist = [];
+    if (typeof(req.app.locals.todolist) == 'undefined') {
+        req.app.locals.todolist = [];
     }
     next();
 });
 
 /* On affiche la todolist et le formulaire */
 router.get('/', function(req, res) {
-    res.render('todo.ejs', {todolist: req.session.todolist});
+    res.render('todo.ejs', {todolist: req.app.locals.todolist});
 });
 
 /* On ajoute un élément à la todolist */
 router.post('/ajouter/', urlencodedParser, function(req, res) {
     if (req.body.newtodo != '') {
-        req.session.todolist.push(req.body.newtodo);
+        req.app.locals.todolist.push(req.body.newtodo);
     }
     res.redirect('/todo');
 });
@@ -29,7 +29,7 @@ router.post('/ajouter/', urlencodedParser, function(req, res) {
 /* Supprime un élément de la todolist */
 router.get('/supprimer/:id', function(req, res) {
     if (req.params.id != '') {
-        req.session.todolist.splice(req.params.id, 1);
+        req.app.locals.todolist.splice(req.params.id, 1);
     }
     res.redirect('/todo');
 });
