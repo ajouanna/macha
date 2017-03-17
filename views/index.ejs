@@ -6,12 +6,14 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-	<p>Routes disponibles :</p>
-	<ul>
-	<li>users</li>
-	<li>todo</li>
-	<li>tchat</li>
-	</ul>
+    <p>Bienvenue sur <%= title %></p>
+    <form id="login" action="/" method="post">
+      <label for="pseudo">Votre identifiant</label>
+      <input id="pseudo" type="text" name="pseudo" autofocus/>
+      <button type="submit">Valider</button>
+    </form>
+    <footer>
+      <p>ajouanna 2017</p> 
+    </footer>
   </body>
 </html>

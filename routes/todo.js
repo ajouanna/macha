@@ -15,7 +15,13 @@ router.use(function(req, res, next){
 
 /* On affiche la todolist et le formulaire */
 router.get('/', function(req, res) {
-    res.render('todo.ejs', {todolist: req.app.locals.todolist});
+    if (!req.session.userName)
+        res.redirect('/');
+    else
+    {
+        var msg = 'Bonjour '+req.session.userName;
+        res.render('todo.ejs', {title: msg, pseudo: req.session.userName, todolist: req.app.locals.todolist});
+    }
 });
 
 /* On ajoute un élément à la todolist */

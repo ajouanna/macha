@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // interactions avec les clients via la librairie socket.io
 io.sockets.on('connection', function (socket, pseudo) {
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
+	// nb : ce code sera appele chaque fois qu'un client se connectera ou se reconnectera
     socket.on('nouveau_client', function(pseudo) {
         pseudo = ent.encode(pseudo);
         socket.pseudo = pseudo;
