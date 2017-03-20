@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
         res.redirect('/');
     else
     {
-        var msg = 'Bonjour '+req.session.userName;
+        var msg = 'Projet Matcha';
         res.render('todo.ejs', {title: msg, pseudo: req.session.userName, todolist: req.app.locals.todolist});
     }
 });

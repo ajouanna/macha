@@ -8,7 +8,8 @@
  
     <body>
         <h1>Le super Chat temps réel !</h1>
-
+        <p><%= title %></p>
+        <p>Les autres utilisateurs vous voient sous le nom de : <%= pseudo %></p>
         <section id="zone_chat">
 
 			<form action="/tchat" method="post" id="formulaire_chat">
@@ -19,6 +20,12 @@
 
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <script>
+        // cette fonction est placee ici pour avoir acces a la variable pseudo
+        function pseudo() {
+            return "<%= pseudo %>";
+        }
+        </script>
 		<script src = "javascripts/tchat.js"></script>
 
     </body>

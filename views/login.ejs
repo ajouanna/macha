@@ -7,13 +7,11 @@
   <body>
     <h1><%= title %></h1>
     <p>Bienvenue sur <%= title %></p>
-     <div id="menu">
-      <ul>
-        <li><a class="menu_item" href="/todo">Todo list partagée</a></li>
-        <li><a class="menu_item" href="/tchat">Tchat</a></li>
-        <li><a class="menu_item" href="/logout">logout</a></li>
-      </ul>
-    </div>
+    <form id="login" action="/login" method="post">
+      <label for="pseudo">Votre identifiant</label>
+      <input id="pseudo" type="text" name="pseudo" autofocus/>
+      <button type="submit">Valider</button>
+    </form>
     <footer>
       <p>ajouanna 2017</p> 
     </footer>

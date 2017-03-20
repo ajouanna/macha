@@ -7,9 +7,11 @@ var session = require('cookie-session'); // Charge le middleware de sessions
 
 // chargement de routeurs spécifiques à chaque route
 var index = require('./routes/index');
+var login = require('./routes/login');
 var users = require('./routes/users');
 var todo = require('./routes/todo');
 var tchat = require('./routes/tchat');
+var logout = require('./routes/logout');
 
 var app = express();
 var port = process.env.port || 8080;
@@ -36,22 +38,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // interactions avec les clients via la librairie socket.io
-io.sockets.on('connection', function (socket, pseudo) {
-    // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
+io.sockets.on('connection', function (socket) {
+  // Dès qu'une nouvelle connexion est etablie, on stocke son pseudo dans la socket et informe les autres personnes
 	// nb : ce code sera appele chaque fois qu'un client se connectera ou se reconnectera
-    socket.on('nouveau_client', function(pseudo) {
+  socket.on('nouveau_client', function(pseudo) {
         pseudo = ent.encode(pseudo);
         socket.pseudo = pseudo;
         socket.broadcast.emit('nouveau_client', pseudo);
-    });
+  });
 
     // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
-    socket.on('message', function (message) {
+  socket.on('message', function (message) {
         message = ent.encode(message);
         socket.broadcast.emit('message', {pseudo: socket.pseudo, message: message});
-    }); 
+  }); 
 
-    socket.on('disconnect', function(){
+  socket.on('disconnect', function(){
         pseudo = socket.pseudo;
         socket.broadcast.emit('deconnexion_client', pseudo);
 	});
@@ -63,9 +65,11 @@ io.sockets.on('connection', function (socket, pseudo) {
 
 
 app.use('/', index); 
+app.use('/login', login);
 app.use('/users', users);
 app.use('/todo', todo);
 app.use('/tchat', tchat);
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

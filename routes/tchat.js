@@ -4,7 +4,12 @@ var router = express.Router();
 
 /* On affiche la page de tchat */
 router.get('/', function(req, res) {
-    res.render('tchat.ejs');
+    if (!req.session.userName)
+        res.redirect('/');
+    else
+    {
+	    res.render('tchat.ejs', {title: 'Projet Matcha', pseudo: req.session.userName});
+	}
 });
 
 

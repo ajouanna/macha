@@ -8,7 +8,7 @@
     <body>
         <h1>Todolist partagee</h1>
         <p><%= title %></p>
-        <p>Pseudo : <%= pseudo %></p>
+        <p>Les autres utilisateurs vous voient sous le nom de : <%= pseudo %></p>
         <ul>
         <% todolist.forEach(function(todo, index) { %>
             <li><a class="todo_item" href="/todo/supprimer/<%= index %>">✘</a> <%= todo %></li>

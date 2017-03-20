@@ -1,10 +1,9 @@
 // Connexion à socket.io
-var socket = io.connect('http://localhost:8080');
+var socket = io();
+var client = "inconnu";
+var client = pseudo(); //  cette fonction est definie dans la vue tchat.ejs
+socket.emit('nouveau_client', client);
 
-// On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
-var pseudo = prompt('Quel est votre pseudo ?');
-socket.emit('nouveau_client', pseudo);
-document.title = pseudo + ' - ' + document.title;
 
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
@@ -23,10 +22,11 @@ socket.on('deconnexion_client', function(pseudo) {
 
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
-$('#formulaire_chat').submit(function () {
+$('#formulaire_chat').submit(function (event) {
+    event.preventDefault();
     var message = $('#message').val();
     socket.emit('message', message); // Transmet le message aux autres
-    insereMessage(pseudo, message); // Affiche le message aussi sur notre page
+    insereMessage(client, message); // Affiche le message aussi sur notre page
     $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
     return false; // Permet de bloquer l'envoi "classique" du formulaire
 });
