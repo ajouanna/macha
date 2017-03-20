@@ -3,6 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
+var hash = require("mhash");
 
 
 router.get('/', function(req, res) { // TODO : verifier si next est necessaire ici
@@ -21,7 +22,9 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 	else 
 	{
 		req.session.userName = ent.encode(req.body.pseudo);
-		console.log('Nouvelle session ouverte avec pseudo = ' + req.session.userName);
+		req.session.mail = ent.encode(req.body.mail);
+		req.session.password = hash('whirlpool', req.body.password);
+		console.log('Nouvelle session ouverte avec pseudo = ' + req.session.userName + '\nmail = ' + req.session.mail + '\nmdp = ' + req.session.password);
 		res.redirect('/'); // on va vers l'index
 	}
 });
