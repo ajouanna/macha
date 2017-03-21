@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Bienvenue sur <%= title %></p>
+    <div id="status">
+    <% if (status) { %>
+      <p><%= status %></p>
+    <% } %>
+    </div>
+    <form id="signin" action="/signin" method="post">
+      <label for="pseudo">Votre identifiant</label>
+      <input id="pseudo" type="text" name="pseudo" autofocus/>
+      <label for="mail">Votre mail</label>
+      <input id="mail" type="email" name="mail"/>
+      <label for="password">Votre mot de passe</label>
+      <input id="password" type="password" name="password"/>
+      <label for="password">Ressaisissez votre mot de passe</label>
+      <input id="password" type="password" name="passwordbis"/>
+      <button type="submit">Valider</button>
+    </form>
+    <div>
+      <a  href="/login">Vous avez déjà un compte ? Authentifiez-vous !</a>
+    </div>
+    <footer>
+      <p>ajouanna 2017</p> 
+    </footer>
+  </body>
+</html>

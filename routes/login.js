@@ -16,15 +16,13 @@ router.get('/', function(req, res) { // TODO : verifier si next est necessaire i
 router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
 	if (typeof(req.body) == 'undefined')
 	{
-		console.log('Bizarre, pas de body dans un post ???');
 		return res.sendStatus(400);
 	}
 	else 
 	{
 		req.session.userName = ent.encode(req.body.pseudo);
-		req.session.mail = ent.encode(req.body.mail);
 		req.session.password = hash('whirlpool', req.body.password);
-		console.log('Nouvelle session ouverte avec pseudo = ' + req.session.userName + '\nmail = ' + req.session.mail + '\nmdp = ' + req.session.password);
+		console.log('LOGIN : Nouvelle session ouverte avec pseudo = ' + req.session.userName + '\nmdp = ' + req.session.password);
 		res.redirect('/'); // on va vers l'index
 	}
 });

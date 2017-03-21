@@ -8,6 +8,7 @@ var session = require('cookie-session'); // Charge le middleware de sessions
 // chargement de routeurs spécifiques à chaque route
 var index = require('./routes/index');
 var login = require('./routes/login');
+var signin = require('./routes/signin');
 var users = require('./routes/users');
 var todo = require('./routes/todo');
 var tchat = require('./routes/tchat');
@@ -21,7 +22,10 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 
 /* On utilise les sessions */
-app.use(session({secret: 'machasecret'}));
+app.use(session({
+  secret: 'machasecret',
+  maxAge: 2 * 24 * 60 * 60 * 1000 // 2 jours
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -65,6 +69,7 @@ io.sockets.on('connection', function (socket) {
 
 
 app.use('/', index); 
+app.use('/signin', signin);
 app.use('/login', login);
 app.use('/users', users);
 app.use('/todo', todo);
