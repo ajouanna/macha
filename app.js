@@ -15,7 +15,7 @@ var tchat = require('./routes/tchat');
 var logout = require('./routes/logout');
 
 var app = express();
-var port = process.env.port || 8080;
+var port = process.env.port || 9064;
 var ent = require('ent');
 var fs = require('fs');
 var server = require('http').createServer(app);
@@ -66,7 +66,6 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('todo_update_vers_clients');
   });
 });
-
 
 app.use('/', index); 
 app.use('/signin', signin);

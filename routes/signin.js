@@ -5,6 +5,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
 var hash = require("mhash");
 
+var db = require('../dbconnect');
+
 
 router.get('/', function(req, res) { // TODO : verifier si next est necessaire ici
 	if (req.session.userName) // deja authentifie : on va a l'index
@@ -20,29 +22,55 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 	}
 	else 
 	{
-		req.session.userName = ent.encode(req.body.pseudo);
-		req.session.mail = ent.encode(req.body.mail);
-		req.session.password = hash('whirlpool', req.body.password);
-
-		// verifier que les deux mdp saisis sont identiques
-		if (!req.body.password || !req.body.passwordbis || req.body.password !== req.body.passwordbis)
+		var status = "";
+		if (!req.body.login || !req.body.mail || !req.body.firstname || !req.body.lastname || !req.body.password || 
+			!req.body.passwordbis)
 		{
 			// afficher une erreur et attendre une nouvelle saisie
-			console.log('Erreur ! Mots de passe differents ou vides');
-			res.render('signin', { title: 'Projet Matcha', status: 'Erreur ! Mots de passe differents ou vides'}); 
-			//res.status(200).send('Erreur ! Mots de passe differents ou vides');
+			status = 'Erreur ! Tous les champs doivent être remplis !';
+			console.log(status);
+			res.render('signin', { title: 'Projet Matcha', status: status});
+			return; // TBD : comment sortir en erreur proprement ?
 		}
-		else
-		{ 
-			// verifier que ce user n'existe pas deja
-			// TODO
-
-			// verifier que ce mail n'existe pas deja
-			// TODO
-			console.log('SIGNIN : Nouvel utilisateur cree et session ouverte avec pseudo = ' + 
-				req.session.userName + '\nmail = ' + req.session.mail + '\nmdp = ' + req.session.password);
-			res.redirect('/'); // on va vers l'index
+		// verifier que les deux mdp saisis sont identiques
+		if (req.body.password !== req.body.passwordbis)
+		{
+			// afficher une erreur et attendre une nouvelle saisie
+			status = 'Erreur ! Mots de passe differents';
+			console.log(status);
+			res.render('signin', { title: 'Projet Matcha', status: status}); 
+			return; // TBD : comment sortir en erreur proprement ?
 		}
+		db.connect(function(err){
+		  if(err){
+		    console.log('Impossible de se connecter a la base de donnees');
+		  }else{
+		    console.log('Connexion a la base de donnees reussie');
+		  }
+		});
+		var record = {
+			login: ent.encode(req.body.login),
+			firstname: ent.encode(req.body.firstname),
+			lastname: ent.encode(req.body.lastname),
+			mail: ent.encode(req.body.mail),
+			password: hash('whirlpool', req.body.password),
+			profile: 'NORMAL'
+		};
+		db.query('INSERT INTO User SET ?', record, function(err,result){
+ 			if(err) {
+ 				status = 'Impossible de creer cet utilisateur';
+ 				console.log(status);
+ 				console.log(err);
+				res.render('signin', { title: 'Projet Matcha', status: status}); 
+ 			}
+ 			else {
+				req.session.userName = ent.encode(req.body.login);
+				req.session.profile = 'NORMAL'; // par ce biais, on ne peut pas creer d'ADMIN
+				console.log('SIGNIN : Nouvel utilisateur cree et session ouverte avec login = ' + req.session.userName);
+				res.redirect('/'); // on va vers l'index
+			}
+			db>end();
+		});
 	}
 });
 
