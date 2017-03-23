@@ -2,7 +2,16 @@
 <html>
   <head>
     <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Projet Matcha Ecole 42">
+    <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
+    <meta name="author" content="Antoine Jouannais / Xavier Milleron">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/signin.css">
+<!--    
     <link rel='stylesheet' href='/stylesheets/style.css' />
+-->
   </head>
   <body>
     <h1><%= title %></h1>
@@ -12,21 +21,24 @@
       <p><%= status %></p>
     <% } %>
     </div>
-    <form id="signin" action="/signin" method="post">
-      <label for="login">Votre identifiant</label>
-      <input id="login" type="text" name="login" autofocus/>
-      <label for="mail">Votre mail</label>
-      <input id="mail" type="email" name="mail"/>
-      <label for="firstname">Votre prénom</label>
-      <input id="firstname" type="text" name="firstname"/>
-      <label for="lastname">Votre nom de famille</label>
-      <input id="lastname" type="text" name="lastname"/>
-      <label for="password">Votre mot de passe</label>
-      <input id="password" type="password" name="password"/>
-      <label for="password">Ressaisissez votre mot de passe</label>
-      <input id="password" type="password" name="passwordbis"/>
-      <button type="submit">Valider</button>
-    </form>
+    <div class ="container">
+      <form id="signin" class="form-signin" action="/signin" method="post">
+        <h2 class="form-signin-heading">Veuillez vous enregistrer</h2>
+        <label for="login" class="sr-only">Votre identifiant</label>
+        <input id="login" class="form-control" type="text" placeholder="Identifiant" name="login" autofocus/>
+        <label for="mail" class="sr-only">Votre mail</label>
+        <input id="mail" class="form-control" placeholder="Adresse Email" type="email" name="mail"/>
+        <label for="firstname" class="sr-only">Votre prénom</label>
+        <input id="firstname" class="form-control" type="text" placeholder="Prénom" name="firstname"/>
+        <label for="lastname" class="sr-only">Votre nom de famille</label>
+        <input id="lastname" class="form-control" type="text" placeholder="Nom de famille" name="lastname"/>
+        <label for="password" class="sr-only">Votre mot de passe</label>
+        <input id="password" class="form-control" type="password" placeholder="Mot de passe" name="password"/>
+        <label for="password" class="sr-only">Ressaisissez votre mot de passe</label>
+        <input id="password" class="form-control" type="password" placeholder="Mot de passe" name="passwordbis"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Valider</button>
+      </form>
+    </div>
     <div>
       <a  href="/login">Vous avez déjà un compte ? Authentifiez-vous !</a>
     </div>
