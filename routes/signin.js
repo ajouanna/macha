@@ -4,8 +4,9 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
 var hash = require("mhash");
-
 var db = require('../dbconnect');
+
+var status = "";
 
 
 router.get('/', function(req, res) { // TODO : verifier si next est necessaire ici
@@ -22,7 +23,6 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 	}
 	else 
 	{
-		var status = "";
 		if (!req.body.login || !req.body.mail || !req.body.firstname || !req.body.lastname || !req.body.password || 
 			!req.body.passwordbis)
 		{
@@ -30,8 +30,29 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 			status = 'Erreur ! Tous les champs doivent être remplis !';
 			console.log(status);
 			res.render('signin', { title: 'Projet Matcha', status: status});
-			return; // TBD : comment sortir en erreur proprement ?
+			return;
 		}
+        // verifier le format du login 
+        if (!req.body.login.match(/^[a-zA-Z0-9\-_]{3,}$/)) {
+            status="L'identifiant doit comprendre au moins 3 caractères alphanumériques";
+            res.render("signin", { title: 'Projet Matcha', status: status});
+            return;
+        }
+        
+        // verifier le format de l'email
+        if (!req.body.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            status="Le format de l'adresse emmil est incorrect";
+            res.render("signin", { title: 'Projet Matcha', status: status});
+            return;
+        }
+        
+        // verifier le format du mot de passe 
+        if (!req.body.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}$/)) {
+            status="L'identifiant doit comprendre 4 caractères minimum dont au moins 1 chiffre, une majuscule, une minuscule";
+            res.render("signin", { title: 'Projet Matcha', status: status});
+            return;
+        }
+        
 		// verifier que les deux mdp saisis sont identiques
 		if (req.body.password !== req.body.passwordbis)
 		{
@@ -69,7 +90,7 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 				console.log('SIGNIN : Nouvel utilisateur cree et session ouverte avec login = ' + req.session.userName);
 				res.redirect('/'); // on va vers l'index
 			}
-			db>end();
+			db.end();
 		});
 	}
 });

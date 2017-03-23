@@ -14,24 +14,26 @@
 -->
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Bienvenue sur <%= title %></p>
-    <div id="status">
-    <% if (status) { %>
-      <p><%= status %></p>
-    <% } %>
-    </div>
+    <header>
+      <h1><%= title %></h1>
+      <p>Bienvenue sur <%= title %></p>
+        <div id="status">
+        <% if (status) { %>
+          <p><%= status %></p>
+        <% } %>
+        </div>
+    </header>
     <form id="login" class="form-signin" action="/login" method="post">
       <h2 class="form-signin-heading">Veuillez vous authentifier</h2>
       <label for="login" class="sr-only">Votre identifiant</label>
-      <input id="login" class="form-control" placeholder="Identifiant" type="text" name="login" autofocus/>
+      <input id="login" class="form-control" placeholder="Identifiant" type="text" name="login" autofocus required/>
       <label for="password" class="sr-only">Votre mot de passe</label>
-      <input id="password" class="form-control" placeholder ="Mot de passe" type="password" name="password"/>
-      <button type="submit">Valider</button>
+      <input id="password" class="form-control" placeholder ="Mot de passe" type="password" name="password" required/>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Valider</button>
+        <a href="/reset">Mot de passe oublié ? Réinitialisez-le !</a>
+        <br>
+        <a  href="/signin">Vous n'avez pas encore de compte ? Créez votre compte !</a>
     </form>
-    <div>
-      <a  href="/signin">Vous n'avez pas encore de compte ? Créez votre compte !</a>
-    </div>
     <footer>
       <p>ajouanna 2017</p> 
     </footer>

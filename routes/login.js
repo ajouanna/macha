@@ -5,7 +5,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
 var hash = require("mhash");
 var db = require('../dbconnect');
-
+var status = "";
 
 router.get('/', function(req, res) { // TODO : verifier si next est necessaire ici
 	if (req.session.userName) // deja authentifie : on va a l'index
@@ -14,21 +14,20 @@ router.get('/', function(req, res) { // TODO : verifier si next est necessaire i
 		res.render('login', { title: 'Projet Matcha', status: ""}); // on affiche la page de login
 });
 
-router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
+router.post('/', urlencodedParser, function(req, res) {
 	if (typeof(req.body) == 'undefined')
 	{
 		return res.sendStatus(400);
 	}
 	else 
 	{
-		var status = "";
 		if (!req.body.login || !req.body.password)
 		{
 			// afficher une erreur et attendre une nouvelle saisie
 			status = 'Erreur ! Tous les champs doivent être remplis !';
 			console.log(status);
 			res.render('login', { title: 'Projet Matcha', status: status});
-			return; // TBD : comment sortir en erreur proprement ?
+			return; 
 		}
 		db.connect(function(err){
 		  if(err){

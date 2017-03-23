@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Projet Matcha Ecole 42">
+    <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
+    <meta name="author" content="Antoine Jouannais / Xavier Milleron">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/signin.css">
+<!--    
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+-->
+    </head>
+  <body>
+     <header>
+        <h1><%= title %></h1>
+        <p>Bienvenue sur <%= title %></p>
+        <div id="status">
+        <% if (status) { %>
+          <p><%= status %></p>
+        <% } %>
+        </div>
+      </header>
+    <div class="container">
+      <div id="form-olvidado">
+        <h4 class="">
+          Mot de passe oublié ?
+        </h4>
+        <form accept-charset="UTF-8" role="form" id="login-recordar" method="post">
+          <fieldset>
+            <span class="help-block">
+              Saisissez l'adresse email associée à votre compte
+              <br>
+              Nous vous enverrons des instructions pour saisir un nouveau mot de passe.
+            </span>
+            <div class="form-group input-group">
+              <span class="input-group-addon">
+                @
+              </span>
+              <input class="form-control" placeholder="Adresse Email" name="email" type="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="btn-olvidado">
+              Continue
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+    <footer>
+        <p>ajouanna 2017</p> 
+    </footer>
+    </body>
+</html>
