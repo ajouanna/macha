@@ -4,11 +4,11 @@ var mysql  = require('mysql');
 var conf = require("./config/setup");
 
 var db = mysql.createConnection({
-  host     : conf.host,
-  user     : conf.user,
-  password : conf.password,
-  database : conf.database,
-  port     : conf.port
+  host     : conf.mysql.host,
+  user     : conf.mysql.user,
+  password : conf.mysql.password,
+  database : conf.mysql.database,
+  port     : conf.mysql.port
 });
 
 module.exports = db;

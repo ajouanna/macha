@@ -3,9 +3,19 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
-var hash = require("mhash");
+// var hash = require("mhash");
+//var bcrypt = require('bcrypt');
+//const saltRounds = 10;
+const gencryption = require("gencryption"); 
 var db = require('../dbconnect');
 var status = "";
+db.connect(function(err){
+  if(err){
+	console.log('Impossible de se connecter a la base de donnees');
+  }else{
+	console.log('Connexion a la base de donnees reussie');
+  }
+});
 
 router.get('/', function(req, res) { // TODO : verifier si next est necessaire ici
 	if (req.session.userName) // deja authentifie : on va a l'index
@@ -29,21 +39,25 @@ router.post('/', urlencodedParser, function(req, res) {
 			res.render('login', { title: 'Projet Matcha', status: status});
 			return; 
 		}
-		db.connect(function(err){
-		  if(err){
-		    console.log('Impossible de se connecter a la base de donnees');
-		  }else{
-		    console.log('Connexion a la base de donnees reussie');
-		  }
-		});
-		db.query('SELECT * FROM user WHERE login = ? AND password = ?', [ent.encode(req.body.login), hash('whirlpool', req.body.password)],
+
+		// var salt = bcrypt.genSaltSync(saltRounds);
+		// var hash = bcrypt.hashSync(req.body.password, salt);
+		var hash = gencryption.whirlpool({text: req.body.password});
+
+		db.query('SELECT * FROM user WHERE login = ? AND password = ?', [ent.encode(req.body.login), hash],
 			function(err, records){
- 			if(err || records.length == 0) { // cas d'erreur ou cas ou le select n'a rien renvoye
- 				status = 'Impossible de se logguer avec ces informations';
+ 			if(err) { // cas d'erreur ou cas ou le select n'a rien renvoye
+ 				status = "Erreur d'acces a la base";
  				console.log(status);
  				console.log(err);
 				res.render('login', { title: 'Projet Matcha', status: status}); 
  			}
+			else if (records.length == 0){
+				status = 'Aucun utilisateur de correspond a ces informations';
+ 				console.log(status);
+ 				console.log(err);
+				res.render('login', { title: 'Projet Matcha', status: status}); 
+			}
  			else {
 				console.log('Donnees recues de la base:\n');
 	  			console.log(records);
@@ -52,7 +66,6 @@ router.post('/', urlencodedParser, function(req, res) {
 				console.log('LOGIN : Nouvelle session ouverte avec login = ' + req.session.userName + ' et profile = ' + req.session.profile);
 				res.redirect('/'); // on va vers l'index
 			}
-			db.end();
 		});
 	}
 });

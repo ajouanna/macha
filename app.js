@@ -14,6 +14,7 @@ var todo = require('./routes/todo');
 var tchat = require('./routes/tchat');
 var logout = require('./routes/logout');
 var reset = require('./routes/reset');
+var chpwd = require('./routes/chpwd');
 
 var app = express();
 var port = process.env.port || 9064;
@@ -76,6 +77,7 @@ app.use('/todo', todo);
 app.use('/tchat', tchat);
 app.use('/logout', logout);
 app.use('/reset', reset);
+app.use('/chpwd', chpwd);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

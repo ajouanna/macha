@@ -3,20 +3,21 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
-var hash = require("mhash");
-var nodemailer = require('nodemailer');
-// create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport({
-        service: 'neuf',
-        host: 'smtp.sfr.fr',
-        auth: {
-            user: 'antoine.jouannais@neuf.fr',
-            pass: 'bidon'
-    }
-});
+var hash = require("md5");
+var status = "";
+
+var transporter = require('../mailserverconnect');
 
 var db = require('../dbconnect');
-var status = "";
+db.connect(function(err){
+  if(err){
+	status = "Impossible de se connecter a la base de donnees";
+	console.log(status);
+  } 
+  else {
+	console.log('Connexion a la base de donnees reussie');
+  }
+});
 
 /* GET */
 router.get('/', function(req, res) { 
@@ -44,17 +45,11 @@ router.post('/', urlencodedParser, function(req, res) {
 			return; 
 		}
         var mail = ent.encode(req.body.email);
-		db.connect(function(err){
-		  if(err){
-		    console.log('Impossible de se connecter a la base de donnees');
-		  }else{
-		    console.log('Connexion a la base de donnees reussie');
-		  }
-		});
+
         var maDate = new Date();
         var alea = maDate.getTime();
-        var cle = hash('md5', alea.toString());
-        console.log('alea = ' + alea.toString() + '\ncle = ' + cle);
+        var cle = hash(alea.toString());
+        console.log('DEBUG : alea = ' + alea.toString() + '\ncle = ' + cle);
 		db.query("UPDATE user SET cle = ? WHERE mail = ?", [cle, mail],
 			function(err, result){
  			if(err) { // cas d'erreur 
@@ -72,27 +67,31 @@ router.post('/', urlencodedParser, function(req, res) {
  			else {
 				console.log('Donnees recues de la base:\n');
 	  			console.log(result);
-                var msg = "Pour changer votre mot de passe au service Matcha, cliquez sur ce lien : xxxxxxxxxxxxxxx"
-                // setup email data with unicode symbols
+				
+				// contenu du mail
+                var msg = "Pour changer votre mot de passe au service Matcha, " +
+				"cliquez sur ce lien : http://localhost:9064/chpwd/" +
+				mail + "/" + cle;
+                
+				// preparation du mail
                 var mailOptions = {
-                    from: '"Antoine Jouannais" <ajouanna@student.42.fr>', // sender address
-                    to: mail, // list of receivers
+                    from: '"Antoine Jouannais" <ajouanna@student.42.fr>', // adresse d'envoi
+                    to: mail, // liste des destinataires (ici 1 seul)
                     subject: 'Matcha : renouvellement de votre mot de passe', // Subject line
                     text: 'Bonjour\n' + msg, // plain text body
                     html: '<b>Bonjour</b><br>' + msg // html body
                 };
 
-                // send mail with defined transport object
+                // envoi du mail
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                         return console.log(error);
                     }
-                    console.log('Message %s sent: %s', info.messageId, info.response);
+                    console.log('Message %s envoye: %s', info.messageId, info.response);
                 });                
                 
                 res.redirect('/'); // on va vers l'index
 			}
-			// db.end();
 		});
 	}
 });

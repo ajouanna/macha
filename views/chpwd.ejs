@@ -24,23 +24,14 @@
         </div>
       </header>
     <div class ="container">
-      <form id="signin" class="form-signin" action="/signin" method="post">
-        <h2 class="form-signin-heading">Veuillez vous enregistrer</h2>
-        <label for="login" class="sr-only">Votre identifiant</label>
-        <input id="login" class="form-control" type="text" placeholder="Identifiant" name="login" pattern="[a-zA-Z0-9\-_]{3,}" title="Doit comprendre au moins 3 caractères alphanumériques" autofocus required/>
-        <label for="mail" class="sr-only">Votre mail</label>
-        <input id="mail" class="form-control" placeholder="Adresse Email" type="email" name="mail" required/>
-        <label for="firstname" class="sr-only">Votre prénom</label>
-        <input id="firstname" class="form-control" type="text" placeholder="Prénom" name="firstname" required/>
-        <label for="lastname" class="sr-only">Votre nom de famille</label>
-        <input id="lastname" class="form-control" type="text" placeholder="Nom de famille" name="lastname" required/>
-        <label for="password" class="sr-only">Votre mot de passe</label>
+      <form id="signin" class="form-signin" action="/chpwd" method="post">
+        <h2 class="form-signin-heading">Veuillez saisir un nouveau mot de passe</h2>
+         <label for="password" class="sr-only">Votre mot de passe</label>
         <input id="password" class="form-control" type="password" placeholder="Mot de passe" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}" 
 	title="Doit contenir 4 caractères minimum dont au moins 1 chiffre, une majuscule, une minuscule" required/>
         <label for="password" class="sr-only">Ressaisissez votre mot de passe</label>
         <input id="password" class="form-control" type="password" placeholder="Ressaisir le mot de passe" name="passwordbis" required/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Valider</button>
-        <a  href="/login">Vous avez déjà un compte ? Authentifiez-vous !</a>
       </form>
     </div>
     <footer>

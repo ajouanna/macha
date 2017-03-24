@@ -3,9 +3,19 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
-var hash = require("mhash");
-var db = require('../dbconnect');
+// var hash = require("mhash");
+// var bcrypt = require('bcrypt');
+// const saltRounds = 10;
+const gencryption = require("gencryption"); 
 
+var db = require('../dbconnect');
+db.connect(function(err){
+  if(err){
+	console.log('Impossible de se connecter a la base de donnees');
+  } else {
+	console.log('Connexion a la base de donnees reussie');
+  }
+});
 var status = "";
 
 
@@ -40,7 +50,7 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
         }
         
         // verifier le format de l'email
-        if (!req.body.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        if (!req.body.mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
             status="Le format de l'adresse emmil est incorrect";
             res.render("signin", { title: 'Projet Matcha', status: status});
             return;
@@ -62,19 +72,16 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 			res.render('signin', { title: 'Projet Matcha', status: status}); 
 			return; // TBD : comment sortir en erreur proprement ?
 		}
-		db.connect(function(err){
-		  if(err){
-		    console.log('Impossible de se connecter a la base de donnees');
-		  }else{
-		    console.log('Connexion a la base de donnees reussie');
-		  }
-		});
+
+		// var salt = bcrypt.genSaltSync(saltRounds);
+		// var hash = bcrypt.hashSync(req.body.password, salt);
+		var hash = gencryption.whirlpool({text: req.body.password});
 		var record = {
 			login: ent.encode(req.body.login),
 			firstname: ent.encode(req.body.firstname),
 			lastname: ent.encode(req.body.lastname),
 			mail: ent.encode(req.body.mail),
-			password: hash('whirlpool', req.body.password),
+			password: hash,
 			profile: 'NORMAL'
 		};
 		db.query('INSERT INTO User SET ?', record, function(err,result){
@@ -90,7 +97,6 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 				console.log('SIGNIN : Nouvel utilisateur cree et session ouverte avec login = ' + req.session.userName);
 				res.redirect('/'); // on va vers l'index
 			}
-			db.end();
 		});
 	}
 });
