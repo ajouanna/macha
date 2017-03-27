@@ -14,26 +14,28 @@
 -->
   </head>
   <body>
-      <header>
-        <h1><%= title %></h1>
-        <p>Bienvenue sur <%= title %></p>
+    <header>
+
         <div id="status">
         <% if (status) { %>
           <p><%= status %></p>
         <% } %>
         </div>
-      </header>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Matcha</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/">Home</a></li>
-      <li><a href="/logout">Se deconnecters</a></li>
-    </ul>
-  </div>
-</nav>
+    </header>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="/">Matcha</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="/todo">To do list partagée</a></li>	  
+			<li><a href="/tchat">Tchat</a></li>
+			<li><a href="/logout">Se deconnecter</a></li>
+		</ul>
+	  </div>
+	</nav>
+    <h1><%= title %></h1>
+    <p>Bienvenue sur <%= title %></p>
     <div class ="container">
 		<h2>Liste des utilisteurs (pour supprimer un utilisateur, cliquez sur son identifiant)</h2>
 		<table class="table table-striped">
@@ -56,8 +58,10 @@
 			<% } %>
 		</table>
     </div>
-    <footer>
-      <p>ajouanna 2017</p> 
+    <footer class='footer'>
+		<div class ="container">
+		<p class='text-muted'>ajouanna 2017</p> 
+		</div>
     </footer>
   </body>
 </html>

@@ -15,20 +15,26 @@
     </head>
   <body>
      <header>
-        <h1><%= title %></h1>
-        <p>Bienvenue sur <%= title %></p>
         <div id="status">
         <% if (status) { %>
           <p><%= status %></p>
         <% } %>
         </div>
       </header>
-    <div class="container">
-      <div id="form-olvidado">
-        <h4 class="">
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="/">Matcha</a>
+		</div>
+	  </div>
+	</nav>
+	  <div class="container">
+        <form id="login-recordar" class="form-signin" method="post">
+	    <h1><%= title %></h1>
+        <h2 class="">
           Mot de passe oublié ?
-        </h4>
-        <form accept-charset="UTF-8" role="form" id="login-recordar" method="post">
+        </h2>
+
           <fieldset>
             <span class="help-block">
               Saisissez l'adresse email associée à votre compte
@@ -47,9 +53,8 @@
           </fieldset>
         </form>
       </div>
-    </div>
-    <footer>
-        <p>ajouanna 2017</p> 
+    <footer class="footer">
+		<p class='text-muted'>ajouanna 2017</p> 
     </footer>
     </body>
 </html>

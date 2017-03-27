@@ -13,7 +13,7 @@ var config = {
         host: 'smtp.sfr.fr',
         auth: {
             user: 'antoine.jouannais@neuf.fr',
-            pass: 'tOn1o0117'
+            pass: 'bidon'
 		}
 	}	
   };

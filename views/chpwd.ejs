@@ -15,15 +15,15 @@
   </head>
   <body>
       <header>
-        <h1><%= title %></h1>
-        <p>Bienvenue sur <%= title %></p>
         <div id="status">
         <% if (status) { %>
           <p><%= status %></p>
         <% } %>
         </div>
       </header>
-    <div class ="container">
+      <h1><%= title %></h1>
+      <h2>Changement de mot de passe</h2>    
+	  <div class ="container">
       <form id="signin" class="form-signin" action="/chpwd" method="post">
         <h2 class="form-signin-heading">Veuillez saisir un nouveau mot de passe</h2>
          <label for="password" class="sr-only">Votre mot de passe</label>
@@ -34,8 +34,8 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Valider</button>
       </form>
     </div>
-    <footer>
-      <p>ajouanna 2017</p> 
+    <footer class="footer">
+		<p class='text-muted'>ajouanna 2017</p> 
     </footer>
   </body>
 </html>

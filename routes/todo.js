@@ -20,7 +20,7 @@ router.get('/', function(req, res) {
     else
     {
         var msg = 'Projet Matcha';
-        res.render('todo.ejs', {title: msg, pseudo: req.session.userName, todolist: req.app.locals.todolist});
+        res.render('todo.ejs', {title: msg, pseudo: req.session.userName, profile: req.session.profile, todolist: req.app.locals.todolist});
     }
 });
 

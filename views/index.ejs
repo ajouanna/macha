@@ -14,9 +14,6 @@
 -->
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Bienvenue sur <%= title %>, <%= pseudo %></p>
-
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -32,9 +29,11 @@
     </ul>
   </div>
 </nav>
-
-    <footer>
-      <p>ajouanna 2017</p> 
+    <h1><%= title %></h1>
+    <p>Bienvenue, <%= pseudo %></p>
+	<p>Nombre d'utilisateurs du service : <%= num_users %></p>
+    <footer class="footer">
+		<p class='text-muted'>ajouanna 2017</p> 
     </footer>
   </body>
 </html>

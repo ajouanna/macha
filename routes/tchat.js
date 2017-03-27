@@ -8,7 +8,7 @@ router.get('/', function(req, res) {
         res.redirect('/');
     else
     {
-	    res.render('tchat.ejs', {title: 'Projet Matcha', pseudo: req.session.userName});
+	    res.render('tchat.ejs', {title: 'Projet Matcha', pseudo: req.session.userName, profile: req.session.profile});
 	}
 });
 

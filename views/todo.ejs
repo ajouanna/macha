@@ -7,20 +7,31 @@
         <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
         <meta name="author" content="Antoine Jouannais / Xavier Milleron">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <link rel="stylesheet" href="stylesheets/style.css" />
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/stylesheets/signin.css">
+	<!--    
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+	-->
     </head>
 
     <body>
          <header>
-            <div id="menu">
-              <ul>
-                <li><a class="menu_item" href="/tchat">Tchat</a></li>
-                <li><a class="menu_item" href="/logout">logout</a></li>
-              </ul>
-            </div>
         </header>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="/">Matcha</a>
+			</div>
+			<ul class="nav navbar-nav">
+			  <li class="active"><a href="/tchat">Tchat</a></li>	  
+			  <% if (pseudo && profile == 'ADMIN') { %>
+				<li><a href="/users">Menu administrateur</a></li>
+			  <% } %>
+			  <li><a href="/logout">Se deconnecter</a></li>
+			</ul>
+		  </div>
+		</nav>
         <h1>Todolist partagee</h1>
-        <p><%= title %></p>
         <p>Les autres utilisateurs vous voient sous le nom de : <%= pseudo %></p>
         <ul>
         <% todolist.forEach(function(todo, index) { %>
@@ -35,6 +46,9 @@
                 <input id ="submit_button" type="submit" />
             </p>
         </form>
+		<footer class="footer">
+		<p class='text-muted'>ajouanna 2017</p> 
+		</footer>
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src = "javascripts/todo_client.js"></script>
