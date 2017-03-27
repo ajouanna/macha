@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Projet Matcha Ecole 42">
+    <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
+    <meta name="author" content="Antoine Jouannais / Xavier Milleron">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/signin.css">
+<!--    
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+-->
+  </head>
+  <body>
+      <header>
+        <h1><%= title %></h1>
+        <p>Bienvenue sur <%= title %></p>
+        <div id="status">
+        <% if (status) { %>
+          <p><%= status %></p>
+        <% } %>
+        </div>
+      </header>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Matcha</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/logout">Se deconnecters</a></li>
+    </ul>
+  </div>
+</nav>
+    <div class ="container">
+		<h2>Liste des utilisteurs (pour supprimer un utilisateur, cliquez sur son identifiant)</h2>
+		<table class="table table-striped">
+			<tr>
+			<th>Identifiant</th><th>Prénom</th><th>Nom</th><th>Email</th><th>Profile</th><th>Date de création</th>
+			</tr>
+			<% for (var i in users) { %>
+			<tr>
+			<% if (users[i].profile == 'ADMIN') {%>
+			<td><%=users[i].login%></td>
+			<% } else { %>
+			<td><a class="users" href="#"><%=users[i].login%></a></td>
+			<% } %>
+			<td><%=users[i].firstname%></td>
+			<td><%=users[i].lastname%></td>
+			<td><%=users[i].mail%></td>
+			<td><%=users[i].profile%></td>
+			<td><%=users[i].creation_date%></td>
+			</tr>
+			<% } %>
+		</table>
+    </div>
+    <footer>
+      <p>ajouanna 2017</p> 
+    </footer>
+  </body>
+</html>

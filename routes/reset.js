@@ -15,6 +15,7 @@ db.connect(function(err){
 	console.log(status);
   } 
   else {
+	  status = "";
 	console.log('Connexion a la base de donnees reussie');
   }
 });
@@ -22,7 +23,10 @@ db.connect(function(err){
 /* GET */
 router.get('/', function(req, res) { 
 	if (!req.session.userName)
+	{
+		status = "";
 		res.render('reset', { title: 'Projet Matcha', status: status});
+	}
 	else
 		res.redirect('/');
 });

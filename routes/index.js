@@ -6,7 +6,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 /* GET home page. */
 router.get('/', function(req, res) { // TODO : verifier si next est necessaire ici
 	if (req.session.userName)
-		res.render('index', { title: 'Projet Matcha', pseudo: req.session.userName });
+		res.render('index', { title: 'Projet Matcha', pseudo: req.session.userName, profile : req.session.profile });
 	else
 		res.redirect('login');
 });
