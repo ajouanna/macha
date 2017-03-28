@@ -1,47 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Projet Matcha Ecole 42">
-    <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
-    <meta name="author" content="Antoine Jouannais / Xavier Milleron">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/signin.css">
-<!--    
-    <link rel='stylesheet' href='/stylesheets/style.css' />
--->
-  </head>
-  <body>
-    <header>
-        <div id="status">
-        <% if (status) { %>
-          <p><%= status %></p>
-        <% } %>
-        </div>
-    </header>
-	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-		<div class="navbar-header">
-		  <a class="navbar-brand" href="/">Matcha</a>
-		</div>
-	  </div>
-	</nav>
-    <form id="login" class="form-signin" action="/login" method="post">
-	  <h1><%= title %></h1>
-      <h2 class="form-signin-heading">Veuillez vous authentifier</h2>
-      <label for="login" class="sr-only">Votre identifiant</label>
-      <input id="login" class="form-control" placeholder="Identifiant" type="text" name="login" autofocus required/>
-      <label for="password" class="sr-only">Votre mot de passe</label>
-      <input id="password" class="form-control" placeholder ="Mot de passe" type="password" name="password" required/>
-      <button type="submit" class="btn btn-lg btn-primary btn-block">Valider</button>
-        <a href="/reset">Mot de passe oublié ? Réinitialisez-le !</a>
-        <br>
-        <a  href="/signin">Vous n'avez pas encore de compte ? Créez votre compte !</a>
-    </form>
-    <footer class="footer">
-		<p class='text-muted'>ajouanna 2017</p> 
-    </footer>
-  </body>
+	<%- include('head'); %>
+
+	<body>
+		<header>
+			<div id="status">
+			<% if (status) { %>
+			  <p><%= status %></p>
+			<% } %>
+			</div>
+		</header>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="/">Matcha</a>
+			</div>
+		  </div>
+		</nav>
+		<form id="login" class="form-signin" action="/login" method="post">
+		  <h1><%= title %></h1>
+		  <h2 class="form-signin-heading">Veuillez vous authentifier</h2>
+		  <label for="login" class="sr-only">Votre identifiant</label>
+		  <input id="login" class="form-control" placeholder="Identifiant" type="text" name="login" autofocus required/>
+		  <label for="password" class="sr-only">Votre mot de passe</label>
+		  <input id="password" class="form-control" placeholder ="Mot de passe" type="password" name="password" required/>
+		  <button type="submit" class="btn btn-lg btn-primary btn-block">Valider</button>
+			<a href="/reset">Mot de passe oublié ? Réinitialisez-le !</a>
+			<br>
+			<a  href="/signin">Vous n'avez pas encore de compte ? Créez votre compte !</a>
+		</form>
+		<%- include('footer'); %>
+	</body>
 </html>

@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Super Chat temps réel !</title>
-		<meta charset="UTF-8">
-		<meta name="description" content="Projet Matcha Ecole 42">
-		<meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
-		<meta name="author" content="Antoine Jouannais / Xavier Milleron">
-		<meta content="width=device-width, initial-scale=1" name="viewport" />
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/stylesheets/signin.css">
-	<!--    
-		<link rel='stylesheet' href='/stylesheets/style.css' />
-	-->    </head>
- 
+ 	<%- include('head'); %>
     <body>
         <header>
         </header>
@@ -27,7 +14,7 @@
 			  <% if (pseudo && profile == 'ADMIN') { %>
 				<li><a href="/users">Menu administrateur</a></li>
 			  <% } %>
-			  <li><a href="/logout">Se deconnecter</a></li>
+			  <li><a href="/logout">Se déconnecter</a></li>
 			</ul>
 		  </div>
 		</nav>
@@ -40,9 +27,8 @@
 				<input type="submit" id="envoi_message" value="Envoyer" />
 			</form>		
         </section>
-		<footer class="footer">
-		<p class='text-muted'>ajouanna 2017</p> 
-		</footer>
+		<%- include('footer'); %>
+
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>

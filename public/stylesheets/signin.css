@@ -32,3 +32,7 @@ body {
 #status {
     color: red;
 }
+
+#delete_user:hover {
+	color: red;
+}

@@ -43,8 +43,8 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
 			return;
 		}
         // verifier le format du login 
-        if (!req.body.login.match(/^[a-zA-Z0-9\-_]{3,}$/)) {
-            status="L'identifiant doit comprendre au moins 3 caractères alphanumériques";
+        if (!req.body.login.match(/^[a-zA-Z0-9\-_]{3,8}$/)) {
+            status="L'identifiant doit comprendre entre 3 et 8 caractères alphanumériques";
             res.render("signin", { title: 'Projet Matcha', status: status});
             return;
         }

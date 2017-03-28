@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Projet Matcha Ecole 42">
-    <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
-    <meta name="author" content="Antoine Jouannais / Xavier Milleron">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/signin.css">
-<!--    
-    <link rel='stylesheet' href='/stylesheets/style.css' />
--->
-  </head>
+ 	<%- include('head'); %>
+
   <body>
 		<header>
 			<div id="status">
@@ -33,7 +22,7 @@
 	  	<h1><%= title %></h1>
         <h2 class="form-signin-heading">Veuillez vous enregistrer</h2>
         <label for="login" class="sr-only">Votre identifiant</label>
-        <input id="login" class="form-control" type="text" placeholder="Identifiant" name="login" pattern="[a-zA-Z0-9\-_]{3,}" title="Doit comprendre au moins 3 caractères alphanumériques" autofocus required/>
+        <input id="login" class="form-control" type="text" placeholder="Identifiant" name="login" pattern="[a-zA-Z0-9\-_]{3,8}" title="Doit comprendre entre 3 et 8 caractères alphanumériques" autofocus required/>
         <label for="mail" class="sr-only">Votre mail</label>
         <input id="mail" class="form-control" placeholder="Adresse Email" type="email" name="mail" required/>
         <label for="firstname" class="sr-only">Votre prénom</label>
@@ -49,8 +38,6 @@
         <a  href="/login">Vous avez déjà un compte ? Authentifiez-vous !</a>
       </form>
     </div>
-    <footer class="footer">
-		<p class='text-muted'>ajouanna 2017</p> 
-    </footer>
+	<%- include('footer'); %>
   </body>
 </html>

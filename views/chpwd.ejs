@@ -1,19 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Projet Matcha Ecole 42">
-    <meta name="keywords" content="HTML,CSS,node.js,JavaScript,MySql">
-    <meta name="author" content="Antoine Jouannais / Xavier Milleron">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/signin.css">
-<!--    
-    <link rel='stylesheet' href='/stylesheets/style.css' />
--->
-  </head>
-  <body>
+	<%- include('head'); %>
+	<body>
       <header>
         <div id="status">
         <% if (status) { %>
@@ -34,8 +22,6 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Valider</button>
       </form>
     </div>
-    <footer class="footer">
-		<p class='text-muted'>ajouanna 2017</p> 
-    </footer>
-  </body>
+	<%- include('footer'); %>
+	</body>
 </html>

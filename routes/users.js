@@ -43,4 +43,41 @@ router.get('/', function(req, res, next) {
 		res.redirect('/');
 });
 
+router.post('/suppress', urlencodedParser, function(req, res) { 
+	if (typeof(req.body) == 'undefined')
+	{
+		return res.sendStatus(400);
+	}
+	else 
+	{
+		if (!req.body.user)
+		{
+			// afficher une erreur 
+			status = 'Erreur ! Le champ user est manquant !';
+			console.log(status);
+			return res.sendStatus(400);
+		}
+		var user = req.body.user;
+		db.query('DELETE FROM user WHERE login = ?', [user], function(err,result){
+			console.log("Resultat du DELETE : " + result);
+ 			if(err) {
+ 				status = 'Impossible de supprimer utilisateur ' + user;
+ 				console.log(status);
+ 				console.log(err);
+				return res.sendStatus(500);			
+ 			}
+			else if (result.affectedRows == 0) {
+				status = "Utilisateur " + user + " inexistant";
+				console.log(status);
+				console.log(result);
+				return res.send(status);
+			}
+ 			else {
+				status = "Supression en base faite"; // attention : cette chaine est attendue cote client, voir delete_user.js
+				console.log(status);
+				return res.send(status);
+			}
+		});
+	}
+});
 module.exports = router;
