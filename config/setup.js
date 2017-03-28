@@ -5,8 +5,8 @@ var config = {
 	  user     : 'root',
 	  password : '',
 	  database : 'matcha',
-	  port : 3306 // valeur par defaut pour mysql
-	  // port : 3307 // valeur a l'ecole 42
+	  // port : 3306 // valeur par defaut pour mysql
+	   port : 3307 // valeur a l'ecole 42
 	  },
 	mailserver: {
 	    service: 'neuf',

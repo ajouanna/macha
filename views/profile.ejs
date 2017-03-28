@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+ 	<%- include('head'); %>
+
+  <body>
+		<header>
+			<div id="status">
+			<% if (status) { %>
+			  <p><%= status %></p>
+			<% } %>
+			</div>
+		</header>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="/">Matcha</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/todo">To do list partagée</a></li>	  
+				<li><a href="/tchat">Tchat</a></li>
+				<li><a href="/logout">Se déconnecter</a></li>
+			</ul>
+		  </div>
+		</nav>
+    <div class ="form-group">
+      <form id="profile" class="form-signin" action="/profile" method="post">
+	  	<h1><%= title %></h1>
+        <h2 class="form-signin-heading">Votre profil</h2>
+
+        <label for="mail" class="sr-only">Votre mail</label>
+        <input id="mail" class="form-control" placeholder="Adresse Email" type="email" name="mail" required value=<%= data.mail %> />
+        <label for="firstname" class="sr-only">Votre prénom</label>
+        <input id="firstname" class="form-control" type="text" placeholder="Prénom" name="firstname" required  value=<%= data.firstname %> />
+        <label for="lastname" class="sr-only">Votre nom de famille</label>
+        <input id="lastname" class="form-control" type="text" placeholder="Nom de famille" name="lastname" required  value="<%= data.lastname %>" />
+
+        <label for="sex" class="sr-only">Votre genre</label>
+         <select form="profile" class="form-control" name="sex">
+          <option value="homme" <% if (data.sex == 'Homme') { %> selected="selected" <% } %> >Homme</option>
+          <option value="femme" <% if (data.sex == 'Femme') { %> selected="selected" <% } %> >Femme</option>
+          <option value="inconnu" <% if (data.sex == 'Inconnu') { %> selected="selected" <% } %> >Inconnu</option>
+        </select>
+
+        <label for="orientation" class="sr-only">Votre orientation sexuelle</label>
+        <select form="profile" class="form-control" name="orientation">
+          <option value="hetero" <% if (data.orientation == 'Hétéro') { %> selected="selected" <% } %> >Hétéro</option>
+          <option value="homo" <% if (data.orientation == 'Homo') { %> selected="selected" <% } %> >Homo</option>
+          <option value="bi" <% if (data.orientation == 'Bi') { %> selected="selected" <% } %> >Bi</option>
+          <option value="inconnu" <% if (data.orientation == 'Inconnu') { %> selected="selected" <% } %> >Inconnu</option>
+        </select>
+
+        <label for="bio" class="sr-only">Votre biographie</label>
+        <textarea id="bio" class="form-control" form="profile" placeholder="bio" name="bio" required><%= data.bio %></textarea>
+
+        <!-- ajouter ici tous les autres champs -->
+          
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Valider</button>
+      </form>
+    </div>
+	<%- include('footer'); %>
+  </body>
+</html>
