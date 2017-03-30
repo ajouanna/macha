@@ -62,6 +62,20 @@ router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si ne
             res.render("signin", { title: 'Projet Matcha', status: status});
             return;
         }
+
+        // verifier le format du prénom 
+        if (!req.body.firstname.match(/^[a-zA-Z0-9\-_\.]{2,255}$/)) {
+            status="Le prénom doit comprendre 2 caractères aphanumériques (ainsi que point, soulignement ou tiret) minimum";
+            res.render("signin", { title: 'Projet Matcha', status: status});
+            return;
+        }
+		
+	    // verifier le format du nom 
+        if (!req.body.lastname.match(/^[a-zA-Z0-9\-_\.]{2,255}$/)) {
+            status="Le nom doit comprendre 2 caractères aphanumériques (ainsi que point, soulignement ou tiret) minimum";
+            res.render("signin", { title: 'Projet Matcha', status: status});
+            return;
+        }	
         
 		// verifier que les deux mdp saisis sont identiques
 		if (req.body.password !== req.body.passwordbis)

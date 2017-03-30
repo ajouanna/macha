@@ -62,16 +62,7 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 	}
 	else 
 	{
-/*	
-		var record = {
-			firstname: ent.encode(req.body.firstname),
-			lastname: ent.encode(req.body.lastname),
-			mail: ent.encode(req.body.mail),
-			gender_id: req.body.gender_id,
-			orientation_id: req.body.orientation_id,
-			bio: ent.encode(req.body.bio),
-		};
-*/	
+
 		var record = {};
         // verifier le format de l'email
         if (req.body.mail) {
@@ -83,10 +74,24 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 				record['mail'] = ent.encode(req.body.mail);
 			}
 		}
-		if (req.body.firstname)
-			record['firstname'] = ent.encode(req.body.firstname);
-		if (req.body.lastname)
-			record['lastname'] = ent.encode(req.body.lastname);
+
+		if (req.body.firstname) {
+			if (!req.body.firstname.match(/^[a-zA-Z0-9\-_\.]{2,255}$/)) {
+				status = "Le format du prénom est incorrect (entre 2 et 255 caractères alphanumériques)";
+				return res.send(status);
+			}
+			else
+				record['firstname'] = ent.encode(req.body.firstname);
+		}
+		if (req.body.lastname) {
+			if (!req.body.lastname.match(/^[a-zA-Z0-9\-_\.]{2,255}$/)) {
+				status = "Le format du nom est incorrect (entre 2 et 255 caractères alphanumériques)";
+				return res.send(status);
+			}
+			else
+				record['lastname'] = ent.encode(req.body.lastname);
+		}
+		
 		if (req.body.gender_id)
 			record['gender_id'] = req.body.gender_id;
 		if (req.body.orientation_id)
@@ -96,7 +101,7 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 
 		db.query('UPDATE User SET ? WHERE ?', [record, {login: req.session.userName}], function(err,result){
 			if(err) {
- 				status = 'essai: Probleme acces base de donnees';
+ 				status = 'profile: Probleme acces base de donnees';
  				console.log(status);
  				console.log(err);
 				return res.send(status);

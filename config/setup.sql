@@ -63,25 +63,25 @@ CREATE TABLE IF NOT EXISTS `user_to_tag` (
 );
 
 /* creation de quelques enregistrements en bdd */
+INSERT INTO Gender (description) VALUES ('Inconnu');
 INSERT INTO Gender (description) VALUES ('Homme');
 INSERT INTO Gender (description) VALUES ('Femme');
 INSERT INTO Gender (description) VALUES ('Trans');
-INSERT INTO Gender (description) VALUES ('Inconnu');
 
+INSERT INTO Orientation (description) VALUES ('Inconnu');
 INSERT INTO Orientation (description) VALUES ('Hétéro');
 INSERT INTO Orientation (description) VALUES ('Homo');
 INSERT INTO Orientation (description) VALUES ('Bi');
-INSERT INTO Orientation (description) VALUES ('Inconnu');
 
 INSERT INTO User (login, mail, password, profile, firstname, lastname, bio, gender_id) SELECT 
 	'admin', 
 	'ajouanna@hotmail.com', 
 	'2f9959b230a44678dd2dc29f037ba1159f233aa9ab183ce3a0678eaae002e5aa6f27f47144a1a4365116d3db1b58ec47896623b92d85cb2f191705daf11858b8', 
 	'ADMIN', 
-	'Antonio',
-	'Giovanotti',
+	'Anabelle',
+	'Jovanotti',
 	"C'est l'unique administrateur de ce site",
-	id FROM Gender WHERE description='Homme'; 
+	id FROM Gender WHERE description='Femme'; 
 
 
 INSERT INTO Image (user_id, image_name) VALUES ('admin','chien.jpg');

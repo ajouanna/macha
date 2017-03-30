@@ -21,23 +21,23 @@
 	  	<h1><%= title %></h1>
       <h2 class="form-signin-heading">Votre profil</h2>
 
-      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+      <form id="profile-mail" class="profile" action="" method="post" onsubmit="return false;">
         <label for="mail" class="sr-only">Votre mail</label>
-        <input id="mail" placeholder="Adresse Email" type="email" name="mail" required value=<%= data.mail %> />
+        <input id="mail" size="30" placeholder="Adresse Email" type="email" name="mail" required value=<%= data.mail %> />
         <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
       </form>
     
-      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+      <form id="profile-name" class="profile" action="" method="post" onsubmit="return false;">
         <label for="firstname" class="sr-only">Votre prénom</label>
-        <input id="firstname" type="text" placeholder="Prénom" name="firstname" required  value=<%= data.firstname %> />
+        <input id="firstname"  size="20" type="text" placeholder="Prénom" name="firstname" required  value=<%= data.firstname %> />
         <label for="lastname" class="sr-only">Votre nom de famille</label>
-        <input id="lastname" type="text" placeholder="Nom de famille" name="lastname" required  value="<%= data.lastname %>" />
+        <input id="lastname"  size="30" type="text" placeholder="Nom de famille" name="lastname" required  value="<%= data.lastname %>" />
         <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
       </form>
 
-      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+      <form id="profile-gender" class="profile" action="" method="post" onsubmit="return false;">
         <label for="gender" class="sr-only">Votre genre</label>
-         <select form="profile" name="gender_id">
+         <select form="profile-gender" name="gender_id">
          <% for (i=0, n=genders.length; i < n; i++) { %>
           <option value="<%= genders[i].id %>" 
           <% if (data.gender_id == genders[i].id) { %> selected="selected" <% } %> ><%= genders[i].description %>     
@@ -47,9 +47,9 @@
         <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
       </form>
 
-      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+      <form id="profile-orientation" class="profile" action="" method="post" onsubmit="return false;">
         <label for="orientation" class="sr-only">Votre orientation sexuelle</label>
-        <select form="profile" name="orientation_id">
+        <select form="profile-orientation" name="orientation_id">
          <% for (i=0, n=orientations.length; i < n; i++) { %>
           <option value="<%= orientations[i].id %>" 
            <% if (data.orientation_id == orientations[i].id) { %> selected="selected" <% } %> ><%= orientations[i].description %>
@@ -59,10 +59,10 @@
         <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
       </form>
 
-      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+      <form id="profile-bio" class="profile" action="" method="post" onsubmit="return false;">
         <label for="bio" class="sr-only">Votre biographie</label>
         <!-- noter le %- ci-dessous qui permet d'afficher le contenu d'un champ  -->
-        <textarea id="bio" form="profile" placeholder="bio" name="bio" required><%- data.bio %></textarea>          
+        <textarea id="bio"  rows="5" cols="30" form="profile-bio" placeholder="bio" name="bio" required><%- data.bio %></textarea>          
         <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
       </form>
 

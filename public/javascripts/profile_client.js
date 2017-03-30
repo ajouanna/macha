@@ -11,7 +11,7 @@ function change_profile(elem) {
 					console.log(this.responseText);
 					var status_msg = document.getElementById('status_msg');
 					console.log(status_msg);
-					if (this.responseText != 'Ok') {
+					if (this.responseText != 'Ok') { // protocole custom : autre chose que Ok signifit un probleme
 						// en cas de probleme cote serveur, ecrire le message renvoye dans le champ de status 			
 						status_msg.innerHTML = this.responseText;
 					}
@@ -24,7 +24,7 @@ function change_profile(elem) {
 			var params = "";
 			var parent=elem.parentNode;
 			console.log(parent);
-			var elems=parent.querySelectorAll('input[type="text"], input[type="email"], select');
+			var elems=parent.querySelectorAll('input[type="text"], input[type="email"], select, textarea');
 			console.log(elems);
 			for ( var i = 0, c = elems.length ; i < c; i++) {
 				if (params.length > 0)
