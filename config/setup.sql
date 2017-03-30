@@ -84,5 +84,13 @@ INSERT INTO User (login, mail, password, profile, firstname, lastname, bio, gend
 	id FROM Gender WHERE description='Femme'; 
 
 
-INSERT INTO Image (user_id, image_name) VALUES ('admin','chien.jpg');
+INSERT INTO Image (user_id, image_name) VALUES ('admin','image_profile.jpg');
 
+INSERT INTO Tag (description) VALUES ('informatique');
+INSERT INTO Tag (description) VALUES ('amour');
+INSERT INTO Tag (description) VALUES ('chiens');
+INSERT INTO Tag (description) VALUES ('yatchs');
+
+INSERT INTO User_to_tag (user_id, tag_id) VALUES ('admin', 1);
+INSERT INTO User_to_tag (user_id, tag_id) VALUES ('admin', 2);
+INSERT INTO User_to_tag (user_id, tag_id) VALUES ('admin', 3);

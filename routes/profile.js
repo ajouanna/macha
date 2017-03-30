@@ -14,7 +14,7 @@ db.connect(function(err){
   }
 });
 var status = "";
-
+var data = {};
 
 router.get('/', function(req, res) { 
 	if (!req.session.userName) // pas authentifie : on va a l'index
@@ -23,19 +23,28 @@ router.get('/', function(req, res) {
         // on lit les infos en base
         
         status = "";
+		data = {
+			record: [],
+			genders : [],
+			orientations : [], 
+			// TODO : recuperer les photos en bdd
+			photos : [{image_name: 'image_profile.jpg'}, {image_name: 'chien.jpg'}],
+			// TODO : recuperer les tags en bdd
+			tags: [{id: 0, description: "chiens"}, {id: 1, description: "nature"}]
+			};
 		db.query('SELECT * FROM user WHERE login = ?', [req.session.userName],
 			function(err, records){
  			if(err) { // cas d'erreur 
  				status = "Erreur d'acces a la base";
  				console.log(status);
  				console.log(err);
-				res.render('profile', { title: 'Projet Matcha', status: status, data:{}, genders:[], orientations:[] }); 
+				res.render('profile', { title: 'Projet Matcha', status: status, data: data }); 
  			}
 			else if (records.length == 0) { // cas ou le select n'a rien renvoye
 				status = 'Aucun utilisateur de correspond a ces informations';
  				console.log(status);
  				console.log(records);
-				res.render('profile', { title: 'Projet Matcha', status: status, data: {}, genders:[], orientations:[] }); 
+				res.render('profile', { title: 'Projet Matcha', status: status, data: data }); 
 			}
  			else {
 				console.log('Donnees recues de la base:\n');
@@ -46,7 +55,10 @@ router.get('/', function(req, res) {
 	  				db.query('SELECT id, description FROM Orientation', function (err, orientations) {
 	  				if (err) throw err;
 	  				console.log(orientations);
-					res.render('profile', { title: 'Projet Matcha', status: status, data: records[0], genders: genders, orientations: orientations }); 
+					data.record = records[0];
+					data.genders = genders;
+					data.orientations = orientations;
+					res.render('profile', { title: 'Projet Matcha', status: status, data: data }); 
 					});
 				});
 			}
