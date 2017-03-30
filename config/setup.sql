@@ -2,6 +2,12 @@ CREATE DATABASE IF NOT EXISTS matcha;
 
 USE matcha;
 
+CREATE TABLE IF NOT EXISTS `Gender` (
+			`id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, `description` varchar(255) NOT NULL ) ;
+
+CREATE TABLE IF NOT EXISTS `Orientation` (
+			`id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, `description` varchar(255) NOT NULL ) ;
+
 CREATE TABLE IF NOT EXISTS `User` ( 
 			`login` varchar(8) NOT NULL, 
 			`mail` varchar(255) NOT NULL, 
@@ -11,10 +17,12 @@ CREATE TABLE IF NOT EXISTS `User` (
 			`profile` ENUM('NORMAL', 'ADMIN') NOT NULL,
 			`creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`cle` varchar(32),
-            `sex` ENUM('Homme', 'Femme', 'Indéterminé', 'Inconnu') DEFAULT 'Inconnu',
-            `orientation` ENUM ('Hétéro', 'Homo', 'Bi', 'Inconnu') DEFAULT 'Inconnu',
+            `gender_id` INT UNSIGNED,
+            `orientation_id` INT UNSIGNED,
             `bio` VARCHAR (500),
             PRIMARY KEY (login),
+            FOREIGN KEY (gender_id) REFERENCES Gender (id),
+            FOREIGN KEY (orientation_id) REFERENCES Orientation (id),
 			CONSTRAINT uc_mail UNIQUE (`mail`) /* unicite du mail dans la base */
 		) ;
 
@@ -55,15 +63,26 @@ CREATE TABLE IF NOT EXISTS `user_to_tag` (
 );
 
 /* creation de quelques enregistrements en bdd */
-INSERT INTO User (login, mail, password, profile, firstname, lastname, sex, bio) VALUES 
-(	'admin', 
+INSERT INTO Gender (description) VALUES ('Homme');
+INSERT INTO Gender (description) VALUES ('Femme');
+INSERT INTO Gender (description) VALUES ('Trans');
+INSERT INTO Gender (description) VALUES ('Inconnu');
+
+INSERT INTO Orientation (description) VALUES ('Hétéro');
+INSERT INTO Orientation (description) VALUES ('Homo');
+INSERT INTO Orientation (description) VALUES ('Bi');
+INSERT INTO Orientation (description) VALUES ('Inconnu');
+
+INSERT INTO User (login, mail, password, profile, firstname, lastname, bio, gender_id) SELECT 
+	'admin', 
 	'ajouanna@hotmail.com', 
 	'2f9959b230a44678dd2dc29f037ba1159f233aa9ab183ce3a0678eaae002e5aa6f27f47144a1a4365116d3db1b58ec47896623b92d85cb2f191705daf11858b8', 
 	'ADMIN', 
 	'Antonio',
 	'Giovanotti',
-	'Homme',
-	"C'est l'unique administrateur de ce site"); 
+	"C'est l'unique administrateur de ce site",
+	id FROM Gender WHERE description='Homme'; 
+
 
 INSERT INTO Image (user_id, image_name) VALUES ('admin','chien.jpg');
 

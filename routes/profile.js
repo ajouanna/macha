@@ -22,77 +22,89 @@ router.get('/', function(req, res) {
 	else {
         // on lit les infos en base
         
-        
+        status = "";
 		db.query('SELECT * FROM user WHERE login = ?', [req.session.userName],
 			function(err, records){
- 			if(err) { // cas d'erreur ou cas ou le select n'a rien renvoye
+ 			if(err) { // cas d'erreur 
  				status = "Erreur d'acces a la base";
  				console.log(status);
  				console.log(err);
-				res.render('profile', { title: 'Projet Matcha', status: status, data:{} }); 
+				res.render('profile', { title: 'Projet Matcha', status: status, data:{}, genders:[], orientations:[] }); 
  			}
-			else if (records.length == 0){
+			else if (records.length == 0) { // cas ou le select n'a rien renvoye
 				status = 'Aucun utilisateur de correspond a ces informations';
  				console.log(status);
- 				console.log(err);
-				res.render('profile', { title: 'Projet Matcha', status: status, data: {} }); 
+ 				console.log(records);
+				res.render('profile', { title: 'Projet Matcha', status: status, data: {}, genders:[], orientations:[] }); 
 			}
  			else {
 				console.log('Donnees recues de la base:\n');
 	  			console.log(records);
-				res.render('profile', { title: 'Projet Matcha', status: status, data: records[0] }); 
+	  			db.query('SELECT id, description FROM Gender', function (err, genders) {
+	  				if (err) throw err;
+	  				console.log(genders);
+	  				db.query('SELECT id, description FROM Orientation', function (err, orientations) {
+	  				if (err) throw err;
+	  				console.log(orientations);
+					res.render('profile', { title: 'Projet Matcha', status: status, data: records[0], genders: genders, orientations: orientations }); 
+					});
+				});
 			}
 		});
     }
 });
 
-router.post('/', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
+router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
+	status = "";
 	if (typeof(req.body) == 'undefined')
 	{
 		return res.sendStatus(400);
 	}
 	else 
 	{
-        /*
-		if (!req.body.login || !req.body.mail || !req.body.firstname || !req.body.lastname || !req.body.password || 
-			!req.body.passwordbis)
-		{
-			// afficher une erreur et attendre une nouvelle saisie
-			status = 'Erreur ! Tous les champs doivent être remplis !';
-			console.log(status);
-			res.render('signin', { title: 'Projet Matcha', status: status});
-			return;
-		}
-
-        // verifier le format de l'email
-        if (!req.body.mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-            status="Le format de l'adresse emmil est incorrect";
-            res.render("signin", { title: 'Projet Matcha', status: status});
-            return;
-        }
-        
-        */
-
+/*	
 		var record = {
 			firstname: ent.encode(req.body.firstname),
 			lastname: ent.encode(req.body.lastname),
 			mail: ent.encode(req.body.mail),
-			sex: ent.encode(req.body.sex),
-			orientation: ent.encode(req.body.orientation),
+			gender_id: req.body.gender_id,
+			orientation_id: req.body.orientation_id,
 			bio: ent.encode(req.body.bio),
 		};
+*/	
+		var record = {};
+        // verifier le format de l'email
+        if (req.body.mail) {
+			if (!req.body.mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            status="Le format de l'adresse email est incorrect";
+            return res.send(status);
+			}
+			else {
+				record['mail'] = ent.encode(req.body.mail);
+			}
+		}
+		if (req.body.firstname)
+			record['firstname'] = ent.encode(req.body.firstname);
+		if (req.body.lastname)
+			record['lastname'] = ent.encode(req.body.lastname);
+		if (req.body.gender_id)
+			record['gender_id'] = req.body.gender_id;
+		if (req.body.orientation_id)
+			record['orientation_id'] = req.body.orientation_id;
+		if (req.body.bio)
+			record['bio'] = ent.encode(req.body.bio);
+
 		db.query('UPDATE User SET ? WHERE ?', [record, {login: req.session.userName}], function(err,result){
- 			if(err) {
- 				status = 'Probleme acces base de donnees';
+			if(err) {
+ 				status = 'essai: Probleme acces base de donnees';
  				console.log(status);
  				console.log(err);
- 				// TODO : comment gere ce cas pour que la page ne soit pas reaffichee entierement mais qu un message d erreur 
- 				// soit affiche ?????????
-				// res.render('profile', { title: 'Projet Matcha', status: status}); 
+				return res.send(status);
  			}
  			else {
-				console.log('profile : utilisateur modifie avec login = ' + req.session.userName);
-				res.redirect('/profile'); 
+				status = 'Ok';
+				console.log(status);
+				return res.send(status); 
 			}
 		});
 	}

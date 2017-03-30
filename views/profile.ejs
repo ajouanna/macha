@@ -3,13 +3,8 @@
  	<%- include('head'); %>
 
   <body>
-		<header>
-			<div id="status">
-			<% if (status) { %>
-			  <p><%= status %></p>
-			<% } %>
-			</div>
-		</header>
+  <%- include('header'); %>
+
 		<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 			<div class="navbar-header">
@@ -23,40 +18,57 @@
 		  </div>
 		</nav>
     <div class ="form-group">
-      <form id="profile" class="form-signin" action="/profile" method="post">
 	  	<h1><%= title %></h1>
-        <h2 class="form-signin-heading">Votre profil</h2>
+      <h2 class="form-signin-heading">Votre profil</h2>
 
+      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
         <label for="mail" class="sr-only">Votre mail</label>
-        <input id="mail" class="form-control" placeholder="Adresse Email" type="email" name="mail" required value=<%= data.mail %> />
-        <label for="firstname" class="sr-only">Votre prénom</label>
-        <input id="firstname" class="form-control" type="text" placeholder="Prénom" name="firstname" required  value=<%= data.firstname %> />
-        <label for="lastname" class="sr-only">Votre nom de famille</label>
-        <input id="lastname" class="form-control" type="text" placeholder="Nom de famille" name="lastname" required  value="<%= data.lastname %>" />
-
-        <label for="sex" class="sr-only">Votre genre</label>
-         <select form="profile" class="form-control" name="sex">
-          <option value="homme" <% if (data.sex == 'Homme') { %> selected="selected" <% } %> >Homme</option>
-          <option value="femme" <% if (data.sex == 'Femme') { %> selected="selected" <% } %> >Femme</option>
-          <option value="inconnu" <% if (data.sex == 'Inconnu') { %> selected="selected" <% } %> >Inconnu</option>
-        </select>
-
-        <label for="orientation" class="sr-only">Votre orientation sexuelle</label>
-        <select form="profile" class="form-control" name="orientation">
-          <option value="hetero" <% if (data.orientation == 'Hétéro') { %> selected="selected" <% } %> >Hétéro</option>
-          <option value="homo" <% if (data.orientation == 'Homo') { %> selected="selected" <% } %> >Homo</option>
-          <option value="bi" <% if (data.orientation == 'Bi') { %> selected="selected" <% } %> >Bi</option>
-          <option value="inconnu" <% if (data.orientation == 'Inconnu') { %> selected="selected" <% } %> >Inconnu</option>
-        </select>
-
-        <label for="bio" class="sr-only">Votre biographie</label>
-        <textarea id="bio" class="form-control" form="profile" placeholder="bio" name="bio" required><%= data.bio %></textarea>
-
-        <!-- ajouter ici tous les autres champs -->
-          
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Valider</button>
+        <input id="mail" placeholder="Adresse Email" type="email" name="mail" required value=<%= data.mail %> />
+        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
       </form>
+    
+      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+        <label for="firstname" class="sr-only">Votre prénom</label>
+        <input id="firstname" type="text" placeholder="Prénom" name="firstname" required  value=<%= data.firstname %> />
+        <label for="lastname" class="sr-only">Votre nom de famille</label>
+        <input id="lastname" type="text" placeholder="Nom de famille" name="lastname" required  value="<%= data.lastname %>" />
+        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
+      </form>
+
+      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+        <label for="gender" class="sr-only">Votre genre</label>
+         <select form="profile" name="gender_id">
+         <% for (i=0, n=genders.length; i < n; i++) { %>
+          <option value="<%= genders[i].id %>" 
+          <% if (data.gender_id == genders[i].id) { %> selected="selected" <% } %> ><%= genders[i].description %>     
+          </option>
+          <% } %>
+        </select>
+        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
+      </form>
+
+      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+        <label for="orientation" class="sr-only">Votre orientation sexuelle</label>
+        <select form="profile" name="orientation_id">
+         <% for (i=0, n=orientations.length; i < n; i++) { %>
+          <option value="<%= orientations[i].id %>" 
+           <% if (data.orientation_id == orientations[i].id) { %> selected="selected" <% } %> ><%= orientations[i].description %>
+           </option>
+          <% } %>
+        </select>
+        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
+      </form>
+
+      <form id="profile" class="profile" action="" method="post" onsubmit="return false;">
+        <label for="bio" class="sr-only">Votre biographie</label>
+        <!-- noter le %- ci-dessous qui permet d'afficher le contenu d'un champ  -->
+        <textarea id="bio" form="profile" placeholder="bio" name="bio" required><%- data.bio %></textarea>          
+        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
+      </form>
+
     </div>
 	<%- include('footer'); %>
+  <script src = "javascripts/profile_client.js"></script>
+
   </body>
 </html>

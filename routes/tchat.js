@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
+var status = "";
 
 /* On affiche la page de tchat */
 router.get('/', function(req, res) {
@@ -8,7 +9,8 @@ router.get('/', function(req, res) {
         res.redirect('/');
     else
     {
-	    res.render('tchat.ejs', {title: 'Projet Matcha', pseudo: req.session.userName, profile: req.session.profile});
+    	status = "";
+	    res.render('tchat.ejs', {title: 'Projet Matcha', status: status, pseudo: req.session.userName, profile: req.session.profile});
 	}
 });
 

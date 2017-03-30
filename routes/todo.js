@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
+var status = "";
 
 /* S'il n'y a pas de todolist 
 on en crée une vide sous forme d'array avant la suite */
@@ -19,8 +19,12 @@ router.get('/', function(req, res) {
         res.redirect('/');
     else
     {
+        status = "";
         var msg = 'Projet Matcha';
-        res.render('todo.ejs', {title: msg, pseudo: req.session.userName, profile: req.session.profile, todolist: req.app.locals.todolist});
+        res.render('todo.ejs', {title: msg, status: status, 
+                    pseudo: req.session.userName, 
+                    profile: req.session.profile, 
+                    todolist: req.app.locals.todolist });
     }
 });
 

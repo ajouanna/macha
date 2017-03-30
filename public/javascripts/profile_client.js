@@ -4,7 +4,7 @@ function change_profile(elem) {
 	if(elem) 
 	{
 			var xhr = new XMLHttpRequest();
-			xhr.open('POST', '/essai/modify', true);
+			xhr.open('POST', '/profile/modify', true);
 			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			xhr.onreadystatechange = function() {
 	        	if (this.readyState == 4 && this.status == 200) {
@@ -24,7 +24,7 @@ function change_profile(elem) {
 			var params = "";
 			var parent=elem.parentNode;
 			console.log(parent);
-			var elems=parent.querySelectorAll('input[type="text"], input[type="email"]');
+			var elems=parent.querySelectorAll('input[type="text"], input[type="email"], select');
 			console.log(elems);
 			for ( var i = 0, c = elems.length ; i < c; i++) {
 				if (params.length > 0)
