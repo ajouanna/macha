@@ -4,8 +4,10 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
 const gencryption = require("gencryption"); 
-
+const path = require('path');
+const fs = require('fs');
 var db = require('../dbconnect');
+
 db.connect(function(err){
   if(err){
 	console.log('Impossible de se connecter a la base de donnees');
@@ -72,6 +74,8 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 	{
 		return res.sendStatus(400);
 	}
+	if (!req.session.userName) // pas authentifie : on va a l'index
+		return res.redirect('/');
 	else 
 	{
 
@@ -126,5 +130,45 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 		});
 	}
 });
+
+
+router.post('/suppress_photo', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
+	status = "";
+	if (typeof(req.body) == 'undefined' || !req.body.img)
+	{
+		return res.sendStatus(400);
+	}
+	if (!req.session.userName) // pas authentifie : on va a l'index
+		return res.redirect('/');
+	else 
+	{
+		// supprimer l'image de la base
+		var image_name = path.basename(req.body.img);
+		console.log('debug : image_name = ' + image_name)
+		db.query('DELETE FROM Image WHERE user_id = ? AND image_name = ?', [req.session.userName, image_name], function(err,result){
+			if(err) {
+ 				status = 'profile: Probleme acces base de donnees sur suppression image';
+ 				console.log(status);
+ 				console.log(err);
+				return res.send(status);
+ 			}
+ 			else {
+ 				if (result.affectedRows == 0)
+ 					console.log('suppress_photo : la photo n existait pas en base');
+ 				// suppression du fichier 
+ 				fs.unlink('./' + req.body.img, (err) => {
+				  if (err)
+				  	console.log('Erreur de suppression du fichier ' + req.body.img);
+				  else
+					console.log('Suppression reussie du fichier ' + req.body.img);
+				});
+				status = 'Ok';
+				console.log(status);
+				return res.send(status); 
+			}
+		});
+	}
+});
+
 
 module.exports = router;

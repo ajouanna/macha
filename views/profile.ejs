@@ -24,7 +24,10 @@
 	  <form id="profile-photos" class="profile" action="" method="post" onsubmit="return false;">
         <label for="photos">Vos photos</label>
 		<% for (var i=0, n=data.photos.length; i < n; i++) { %>
-			<img src="photos/<%=data.photos[i].image_name %>" alt="Image de profile" height="50">
+    <div class="photo">
+			<img src="photos/<%=data.photos[i].image_name %>" onclick="delete_photo(this);" alt="Image de profile" height="50">
+      <p>Cliquez sur la photo pour supprimer</p>
+    </div>
         <% } %>
 
 			<!-- TODO: faire une gestion de la saisie des images 
