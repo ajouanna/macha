@@ -24,7 +24,7 @@ function change_profile(elem) {
 			var params = "";
 			var parent=elem.parentNode;
 			console.log(parent);
-			var elems=parent.querySelectorAll('input[type="text"], input[type="email"], select, textarea');
+			var elems=parent.querySelectorAll('input[type="text"], input[type="email"], input[type="date"], select, textarea');
 			console.log(elems);
 			for ( var i = 0, c = elems.length ; i < c; i++) {
 				if (params.length > 0)

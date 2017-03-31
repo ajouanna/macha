@@ -1,18 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var multer  =   require('multer'); // pour uploader des images
-var upload = multer({ dest: 'public/photos/' });
-
-/* var storage =   multer.diskStorage({
+var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './public/photos');
   },
   filename: function (req, file, callback) {
-    callback(null, Date.now() + '-' + file.fieldname + file.extension);
+	console.log('debug pour diskStorage : ' + file);
+    callback(null, Date.now() + '-' + file.fieldname);
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
-*/
+
 
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -48,7 +47,7 @@ router.get('/', function(req, res) {
 			// TODO : recuperer les tags en bdd
 			tags: [{id: 0, description: "chiens"}, {id: 1, description: "nature"}]
 			};
-		db.query('SELECT * FROM user WHERE login = ?', [req.session.userName],
+		db.query('SELECT mail, firstname, lastname, gender_id, orientation_id, bio, DATE_FORMAT(birthday,"%Y-%m-%d") AS birthday FROM user WHERE login = ?', [req.session.userName],
 			function(err, records){
  			if(err) { // cas d'erreur 
  				status = "Erreur d'acces a la base";
@@ -69,12 +68,16 @@ router.get('/', function(req, res) {
 	  				if (err) throw err;
 	  				console.log(genders);
 	  				db.query('SELECT id, description FROM Orientation', function (err, orientations) {
-	  				if (err) throw err;
-	  				console.log(orientations);
-					data.record = records[0];
-					data.genders = genders;
-					data.orientations = orientations;
-					res.render('profile', { title: 'Projet Matcha', status: status, data: data }); 
+						if (err) throw err;
+						db.query('SELECT * FROM Image WHERE user_id = ?',[req.session.userName], function (err, photos) {
+						if (err) throw err;				
+							console.log(orientations);
+							data.record = records[0];
+							data.genders = genders;
+							data.orientations = orientations;
+							data.photos = photos;
+							res.render('profile', { title: 'Projet Matcha', status: status, data: data }); 
+						});
 					});
 				});
 			}
@@ -129,7 +132,10 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 			record['orientation_id'] = req.body.orientation_id;
 		if (req.body.bio)
 			record['bio'] = ent.encode(req.body.bio);
-
+		if (req.body.birthday) {
+			console.log("debug birthday = " + req.body.birthday);
+			record['birthday'] = req.body.birthday;
+			}
 		db.query('UPDATE User SET ? WHERE ?', [record, {login: req.session.userName}], function(err,result){
 			if(err) {
  				status = 'profile: Probleme acces base de donnees';
@@ -196,14 +202,30 @@ router.get('/add_photo', function(req, res) {
 });
 
 
-//router.post('/add_photo',function(req,res){
-//    upload(req,res,function(err) {
-router.post('/add_photo',upload.single('userPhoto'), function (req, res) {
+router.post('/add_photo',function(req,res){
+    upload(req,res,function(err) {
 		console.log('debug : ');
 		console.log(req.file);
-		
 		console.log("upload a réussi");
+		var record = {
+			user_id: req.session.userName,
+			image_name: req.file.filename
+		};
+		db.query('INSERT INTO Image SET ?', record, function(err,result){
+ 			if(err) {
+ 				status = 'Impossible de creer cette image en base';
+ 				console.log(status);
+ 				console.log(err);
+				res.redirect('/profile'); 
+ 			}
+ 			else {
+				status = 'Image créée en base';
+ 				console.log(status);
+				res.redirect('/profile'); // on va vers l'index
+			}
+		});
         res.redirect('/profile');
+	});
 });
 
 module.exports = router;

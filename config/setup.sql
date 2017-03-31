@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `User` (
             `gender_id` INT UNSIGNED,
             `orientation_id` INT UNSIGNED,
             `bio` VARCHAR (500),
+			`birthday` DATE, 
             PRIMARY KEY (login),
             FOREIGN KEY (gender_id) REFERENCES Gender (id),
             FOREIGN KEY (orientation_id) REFERENCES Orientation (id),

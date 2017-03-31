@@ -90,7 +90,11 @@
         <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
 		-->
       </form>
-
+      <form id="profile-birthday" class="profile" action="" method="post" onsubmit="return false;">
+        <label for="birthday">Votre anniversaire</label>
+		<input type="date" name="birthday" value="<%= data.record.birthday %>">
+        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
+      </form>
     </div>
 	<%- include('footer'); %>
   <script src = "javascripts/profile_client.js"></script>
