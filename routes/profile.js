@@ -1,5 +1,19 @@
 var express = require('express');
 var router = express.Router();
+var multer  =   require('multer'); // pour uploader des images
+var upload = multer({ dest: 'public/photos/' });
+
+/* var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/photos');
+  },
+  filename: function (req, file, callback) {
+    callback(null, Date.now() + '-' + file.fieldname + file.extension);
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+*/
+
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var ent = require('ent');
@@ -68,6 +82,7 @@ router.get('/', function(req, res) {
     }
 });
 
+// appelé via ajax
 router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
 	status = "";
 	if (typeof(req.body) == 'undefined')
@@ -131,7 +146,7 @@ router.post('/modify', urlencodedParser, function(req, res) { // TODO : verifier
 	}
 });
 
-
+// appelé via ajax
 router.post('/suppress_photo', urlencodedParser, function(req, res) { // TODO : verifier si next est necessaire ici
 	status = "";
 	if (typeof(req.body) == 'undefined' || !req.body.img)
@@ -153,14 +168,16 @@ router.post('/suppress_photo', urlencodedParser, function(req, res) { // TODO : 
 				return res.send(status);
  			}
  			else {
+				console.log(result);
  				if (result.affectedRows == 0)
  					console.log('suppress_photo : la photo n existait pas en base');
  				// suppression du fichier 
- 				fs.unlink('./' + req.body.img, (err) => {
+				console.log('debug : le repertoire courant est : ' + process.cwd());
+ 				fs.unlink('./public/photos/' + image_name, (err) => {
 				  if (err)
-				  	console.log('Erreur de suppression du fichier ' + req.body.img);
+				  	console.log('Erreur de suppression du fichier ' + image_name);
 				  else
-					console.log('Suppression reussie du fichier ' + req.body.img);
+					console.log('Suppression reussie du fichier ' + image_name);
 				});
 				status = 'Ok';
 				console.log(status);
@@ -170,5 +187,23 @@ router.post('/suppress_photo', urlencodedParser, function(req, res) { // TODO : 
 	}
 });
 
+router.get('/add_photo', function(req, res) { 
+	if (!req.session.userName) // pas authentifie : on va a l'index
+		res.redirect('/');
+	else {
+		res.render('add_photo', { title: 'Projet Matcha', status: status }); 
+	}
+});
+
+
+//router.post('/add_photo',function(req,res){
+//    upload(req,res,function(err) {
+router.post('/add_photo',upload.single('userPhoto'), function (req, res) {
+		console.log('debug : ');
+		console.log(req.file);
+		
+		console.log("upload a réussi");
+        res.redirect('/profile');
+});
 
 module.exports = router;

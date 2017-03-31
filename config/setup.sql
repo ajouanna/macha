@@ -85,6 +85,7 @@ INSERT INTO User (login, mail, password, profile, firstname, lastname, bio, gend
 
 
 INSERT INTO Image (user_id, image_name) VALUES ('admin','image_profile.jpg');
+INSERT INTO Image (user_id, image_name) VALUES ('admin','chien.jpg');
 
 INSERT INTO Tag (description) VALUES ('informatique');
 INSERT INTO Tag (description) VALUES ('amour');

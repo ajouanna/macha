@@ -21,19 +21,16 @@
 	  	<h1><%= title %></h1>
       <h2 class="form-signin-heading">Votre profil</h2>
 
-	  <form id="profile-photos" class="profile" action="" method="post" onsubmit="return false;">
+	  <div id="profile-photos" class="profile" action="" method="post" onsubmit="return false;">
         <label for="photos">Vos photos</label>
 		<% for (var i=0, n=data.photos.length; i < n; i++) { %>
-    <div class="photo">
+		<div class="photo">
 			<img src="photos/<%=data.photos[i].image_name %>" onclick="delete_photo(this);" alt="Image de profile" height="50">
-      <p>Cliquez sur la photo pour supprimer</p>
-    </div>
+			<p>Cliquez sur la photo pour supprimer</p>
+		</div>
         <% } %>
-
-			<!-- TODO: faire une gestion de la saisie des images 
-        <button class="btn" type="submit" onclick="change_profile(this)">Valider</button>
-		-->
-      </form>
+		<a href="/profile/add_photo">Ajouter une photo</a>
+	  </div>
 	  
       <form id="profile-mail" class="profile" action="" method="post" onsubmit="return false;">
         <label for="mail" >Votre mail</label>

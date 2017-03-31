@@ -62,3 +62,4 @@ function delete_photo(elem) {
 		}
 	}
 }
+
